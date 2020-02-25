@@ -8,6 +8,7 @@
 
 - Ruby
 - Refactoring based on [Emily](https://github.com/emilybache)'s [GildedRose-Refactoring-Kata](https://github.com/emilybache/GildedRose-Refactoring-Kata)
+- Her [Ruby's kata](https://github.com/emilybache/GildedRose-Refactoring-Kata/tree/master/ruby)
 - Interact with the code via a REPL like IRB
 
 ### Installation
