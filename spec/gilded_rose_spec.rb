@@ -143,6 +143,7 @@ describe GildedRose do
       expect(items[9].sell_in).to eq -2
     end
 
+    it "degrades the quality "
   end
 
 end
