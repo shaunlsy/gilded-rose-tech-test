@@ -37,7 +37,10 @@ class ItemProperty < SimpleDelegator
       increase_quality
       increase_quality if sell_in < 11
       increase_quality if sell_in < 6
-      self.quality -= quality if sell_in.negative?
+      decrease_quality(quality) if sell_in.negative?
+    elsif name == 'Conjured Mana Cake'
+      decrease_quality(2* DEFAULT_QUALITY_DECREASE)
+      decrease_quality(2* DEFAULT_QUALITY_DECREASE) if sell_in.negative?
     else
       decrease_quality
       decrease_quality if sell_in.negative?

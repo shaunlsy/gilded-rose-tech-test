@@ -125,8 +125,8 @@ describe GildedRose do
 
     it 'drops the quality of the Backstage to 0 1, 20after the concert' do
       expect(items[9].name).to eq 'Backstage passes to a TAFKAL80ETC concert'
-      # expect(items[9].quality).to eq 23
-      # expect(items[9].sell_in).to eq 0
+      expect(items[9].quality).to eq 23
+      expect(items[9].sell_in).to eq 0
 
       GildedRose.new(items).update_quality
       expect(items[9].name).to eq 'Backstage passes to a TAFKAL80ETC concert'
@@ -139,7 +139,15 @@ describe GildedRose do
       expect(items[9].sell_in).to eq -2
     end
 
-    it 'degrades the quality of conjured items twice as fast as normal items' do
+    it 'degrades the quality of conjured items 20,20 twice as fast as normal items' do
+      expect(items[10].name).to eq 'Conjured Mana Cake'
+      expect(items[10].quality).to eq 18
+      expect(items[10].sell_in).to eq 19
+
+      GildedRose.new(items).update_quality
+      expect(items[10].name).to eq 'Conjured Mana Cake'
+      expect(items[10].quality).to eq 16
+      expect(items[10].sell_in).to eq 18
     end
   end
 end
