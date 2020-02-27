@@ -12,44 +12,36 @@ class ItemProperty < SimpleDelegator
   DEFAULT_SELL_IN_DECREASE = 1
 
   def increase_quality(amount = DEFAULT_QUALITY_INCREASE)
-    self.quality += amount if self.quality < MAX_QUALITY
+    self.quality += amount if quality < MAX_QUALITY
   end
 
   def decrease_quality(amount = DEFAULT_QUALITY_DECREASE)
-    self.quality -= amount if self.quality > MIN_QUALITY
+    self.quality -= amount if quality > MIN_QUALITY
   end
 
   def decrease_sell_in(amount = DEFAULT_SELL_IN_DECREASE)
-    self.sell_in -= amount if self.name != 'Sulfuras, Hand of Ragnaros'
+    self.sell_in -= amount
   end
 
   def condition
+    return if name == 'Sulfuras, Hand of Ragnaros'
     decrease_sell_in
     detailed_condition
   end
 
   def detailed_condition
-    if (name != 'Aged Brie') && (name != 'Backstage passes to a TAFKAL80ETC concert')
-      decrease_quality if name != 'Sulfuras, Hand of Ragnaros'
+    if name == 'Aged Brie'
+      increase_quality
+      increase_quality if sell_in.negative?
+    elsif name == 'Backstage passes to a TAFKAL80ETC concert'
+      increase_quality
+      increase_quality if sell_in < 11
+      increase_quality if sell_in < 6
+      self.quality -= quality if sell_in.negative?
     else
-      if quality < 50
-        increase_quality
-        if name == 'Backstage passes to a TAFKAL80ETC concert'
-          increase_quality if sell_in < 11
-          increase_quality if sell_in < 6
-        end
-      end
-    end
-    if sell_in.negative?
-      if name != 'Aged Brie'
-        if name != 'Backstage passes to a TAFKAL80ETC concert'
-          decrease_quality
-        else
-          decrease_quality(quality)
-        end
-      else
-        increase_quality
-      end
+      decrease_quality
+      decrease_quality if sell_in.negative?
     end
   end
+
 end

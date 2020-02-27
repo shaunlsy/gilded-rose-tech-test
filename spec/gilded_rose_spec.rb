@@ -90,7 +90,7 @@ describe GildedRose do
       expect(items[5].sell_in).to eq 10
     end
 
-    it 'reduces the sell_in and increases quality of the Backstage passes' do
+    it 'reduces the sell_in and increases quality of the Backstage passes 20, 20' do
       expect(items[6].name).to eq 'Backstage passes to a TAFKAL80ETC concert'
       expect(items[6].quality).to eq 21
       expect(items[6].sell_in).to eq 19
@@ -101,7 +101,7 @@ describe GildedRose do
       expect(items[6].sell_in).to eq 18
     end
 
-    it 'reduces the sell_in and increases quality of the Backstage passes twice when there are 10 days or less' do
+    it 'reduces the sell_in and increases quality of the Backstage passes 10, 20 twice when there are 10 days or less' do
       expect(items[7].name).to eq 'Backstage passes to a TAFKAL80ETC concert'
       expect(items[7].quality).to eq 22
       expect(items[7].sell_in).to eq 9
@@ -112,7 +112,7 @@ describe GildedRose do
       expect(items[7].sell_in).to eq 8
     end
 
-    it 'reduces the sell_in and increases quality of the Backstage passes twice when there are 10 days or less' do
+    it 'reduces the sell_in and increases quality of the Backstage passes twice 5, 20 when there are 5 days or less' do
       expect(items[8].name).to eq 'Backstage passes to a TAFKAL80ETC concert'
       expect(items[8].quality).to eq 23
       expect(items[8].sell_in).to eq 4
@@ -123,10 +123,10 @@ describe GildedRose do
       expect(items[8].sell_in).to eq 3
     end
 
-    it 'reduces the sell_in and increases quality of the Backstage passes twice when there are 10 days or less' do
+    it 'drops the quality of the Backstage to 0 1, 20after the concert' do
       expect(items[9].name).to eq 'Backstage passes to a TAFKAL80ETC concert'
-      expect(items[9].quality).to eq 23
-      expect(items[9].sell_in).to eq 0
+      # expect(items[9].quality).to eq 23
+      # expect(items[9].sell_in).to eq 0
 
       GildedRose.new(items).update_quality
       expect(items[9].name).to eq 'Backstage passes to a TAFKAL80ETC concert'
