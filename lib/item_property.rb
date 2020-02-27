@@ -7,44 +7,48 @@ require 'delegate'
 class ItemProperty < SimpleDelegator
   MAX_QUALITY = 50
   MIN_QUALITY = 0
-  DEFAULT_QUALITY_INCREASE = 1
-  DEFAULT_QUALITY_DECREASE = 1
+  DEFAULT_QUALITY_CHANGE = 1
   DEFAULT_SELL_IN_DECREASE = 1
 
-  def increase_quality(amount = DEFAULT_QUALITY_INCREASE)
-    self.quality += amount if quality < MAX_QUALITY
-  end
-
-  def decrease_quality(amount = DEFAULT_QUALITY_DECREASE)
-    self.quality -= amount if quality > MIN_QUALITY
+  def condition
+    return if name == 'Sulfuras, Hand of Ragnaros'
+    decrease_sell_in
+    change_quality
   end
 
   def decrease_sell_in(amount = DEFAULT_SELL_IN_DECREASE)
     self.sell_in -= amount
   end
 
-  def condition
-    return if name == 'Sulfuras, Hand of Ragnaros'
-    decrease_sell_in
-    detailed_condition
+  def change_quality
+    self.quality += calculate_quality
   end
 
-  def detailed_condition
+  def calculate_quality
+    measure = 0
     if name == 'Aged Brie'
-      increase_quality
-      increase_quality if sell_in.negative?
+      measure += DEFAULT_QUALITY_CHANGE
+      measure += DEFAULT_QUALITY_CHANGE if sell_in.negative?
     elsif name == 'Backstage passes to a TAFKAL80ETC concert'
-      increase_quality
-      increase_quality if sell_in < 11
-      increase_quality if sell_in < 6
-      decrease_quality(quality) if sell_in.negative?
+      measure += DEFAULT_QUALITY_CHANGE
+      measure += DEFAULT_QUALITY_CHANGE if sell_in < 11
+      measure += DEFAULT_QUALITY_CHANGE if sell_in < 6
+      measure -= (quality+3) if sell_in.negative?
     elsif name == 'Conjured Mana Cake'
-      decrease_quality(2* DEFAULT_QUALITY_DECREASE)
-      decrease_quality(2* DEFAULT_QUALITY_DECREASE) if sell_in.negative?
+      measure -= 2 * DEFAULT_QUALITY_CHANGE
+      measure -= 2 * DEFAULT_QUALITY_CHANGE if sell_in.negative?
     else
-      decrease_quality
-      decrease_quality if sell_in.negative?
+      measure -= DEFAULT_QUALITY_CHANGE
+      measure -= DEFAULT_QUALITY_CHANGE if sell_in.negative?
     end
+    measure
+  end
+
+  def quality=(new_quality)
+    new_quality = 0 if new_quality < 0
+    new_quality = 50 if new_quality > 50
+    # calls a method on the parent class with the same name as the method that calls super
+    super(new_quality)
   end
 
 end
