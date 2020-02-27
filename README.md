@@ -9,7 +9,6 @@
 - Ruby
 - Refactoring based on [Emily](https://github.com/emilybache)'s [GildedRose-Refactoring-Kata](https://github.com/emilybache/GildedRose-Refactoring-Kata)
 - Her [Ruby's kata](https://github.com/emilybache/GildedRose-Refactoring-Kata/tree/master/ruby)
-- Interact with the code via a REPL like IRB
 
 ### Installation
 
@@ -21,6 +20,7 @@
 > bundle install
 > rspec # to check all tests pass and show the coverage from simplecov
 > rubocop # to check all tests pass
+> ruby './lib/test_fixture.rb' # to check the quality of the items for the next 15 days
 ```
 
 ### Requirements
@@ -54,5 +54,4 @@ HINT: Test first FTW!
 
 ![Tracking pixel](https://githubanalytics.herokuapp.com/course/individual_challenges/gilded_rose.md)
 
-
-irb -r './lib/gilded_rose.rb' 
+irb -r './lib/gilded_rose.rb'

@@ -1,7 +1,9 @@
 # frozen_string_literal: true
-
 require_relative 'item_property'
-class GildedRose < ItemProperty
+require_relative 'item'
+require_relative 'aged_brie'
+require_relative 'backstage'
+class GildedRose
   def initialize(items)
     @items = items
   end
