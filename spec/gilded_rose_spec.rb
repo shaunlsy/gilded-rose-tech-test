@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-
+require 'spec_helper'
 require File.join(File.dirname(__FILE__), '../lib/gilded_rose')
 
 describe GildedRose do
@@ -127,10 +127,8 @@ describe GildedRose do
       expect(items[9].name).to eq 'Backstage passes to a TAFKAL80ETC concert'
       expect(items[9].quality).to eq 23
       expect(items[9].sell_in).to eq 0
-      p items[9]
       GildedRose.new(items).update_quality
       expect(items[9].name).to eq 'Backstage passes to a TAFKAL80ETC concert'
-      p items[9]
       expect(items[9].quality).to eq 0
       expect(items[9].sell_in).to eq -1
 

@@ -8,7 +8,7 @@ class GildedRose < ItemProperty
 
   def update_quality
     @items.each do |item|
-      ItemProperty.new(item).condition
+      ItemProperty.wrap(item).condition
     end
   end
 end

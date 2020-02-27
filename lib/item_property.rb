@@ -2,6 +2,7 @@
 
 require_relative 'item'
 require 'delegate'
+require_relative 'aged_brie'
 
 # self Property Class responsible for the quality and sell in of the selfs
 class ItemProperty < SimpleDelegator
@@ -9,6 +10,21 @@ class ItemProperty < SimpleDelegator
   MIN_QUALITY = 0
   DEFAULT_QUALITY_CHANGE = 1
   DEFAULT_SELL_IN_DECREASE = 1
+
+  def self.wrap(item)
+    case item.name
+    when "Aged Brie"
+      AgedBrie.new(item)
+    when "Backstage passes to a TAFKAL80ETC concert"
+      BackStage.new(item)
+    when "Conjured Mana Cake"
+      Conjured.new(item)
+    when "Sulfuras, Hand of Ragnaros"
+      Sulfuras.new(item)
+    else
+      new(item)
+    end
+  end
 
   def condition
     return if name == 'Sulfuras, Hand of Ragnaros'
@@ -26,21 +42,7 @@ class ItemProperty < SimpleDelegator
 
   def calculate_quality
     measure = 0
-    if name == 'Aged Brie'
-      measure += DEFAULT_QUALITY_CHANGE
-      measure += DEFAULT_QUALITY_CHANGE if sell_in.negative?
-    elsif name == 'Backstage passes to a TAFKAL80ETC concert'
-      measure += DEFAULT_QUALITY_CHANGE
-      measure += DEFAULT_QUALITY_CHANGE if sell_in < 11
-      measure += DEFAULT_QUALITY_CHANGE if sell_in < 6
-      measure -= (quality+3) if sell_in.negative?
-    elsif name == 'Conjured Mana Cake'
-      measure -= 2 * DEFAULT_QUALITY_CHANGE
-      measure -= 2 * DEFAULT_QUALITY_CHANGE if sell_in.negative?
-    else
-      measure -= DEFAULT_QUALITY_CHANGE
-      measure -= DEFAULT_QUALITY_CHANGE if sell_in.negative?
-    end
+    sell_in < 0 ? measure -= 1 : measure -= 1
     measure
   end
 
@@ -51,4 +53,41 @@ class ItemProperty < SimpleDelegator
     super(new_quality)
   end
 
+end
+
+
+class BackStage < ItemProperty
+  def calculate_quality
+    measure = 1
+    measure -= (quality + 3) if sell_in < 0
+    measure += 1 if sell_in < 11    
+    measure += 1 if sell_in < 6
+    measure
+  end
+end
+
+class Conjured < ItemProperty
+  def calculate_quality
+    measure = -2
+    if sell_in < 0
+      measure -= 2
+    end
+    measure
+  end
+end
+
+class Sulfuras < ItemProperty
+  def calculate_quality
+    # No changes with Sulfuras
+  end
+end
+
+class AgedBrie < ItemProperty
+  def calculate_quality
+    measure = 1
+    if sell_in < 0
+      measure += 1
+    end
+    measure
+  end
 end
