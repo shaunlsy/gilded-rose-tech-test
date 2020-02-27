@@ -3,6 +3,12 @@
 require_relative 'item'
 require_relative 'item_property'
 class GildedRose
+  MAX_QUALITY = 50
+  MIN_QUALITY = 0
+  DEFAULT_QUALITY_INCREASE = 1
+  DEFAULT_QUALITY_DECREASE = 1
+  DEFAULT_SELL_IN_DECREASE = 1
+
   def initialize(items)
     @items = items
   end
@@ -13,39 +19,42 @@ class GildedRose
     end
   end
 
+  def increase_quality(item, amount=DEFAULT_QUALITY_INCREASE)
+    item.quality += amount if item.quality < MAX_QUALITY
+  end
+
+  def decrease_quality(item, amount=DEFAULT_QUALITY_DECREASE)
+    item.quality -= amount if item.quality > MIN_QUALITY
+  end
+
+  def decrease_sell_in(item, amount=DEFAULT_SELL_IN_DECREASE)
+    item.sell_in -= amount
+  end
+
   def condition(item)
     if (item.name != 'Aged Brie') && (item.name != 'Backstage passes to a TAFKAL80ETC concert')
-      if item.quality > 0
-        item.quality = item.quality - 1 if item.name != 'Sulfuras, Hand of Ragnaros'
-      end
+      decrease_quality(item) if item.name != 'Sulfuras, Hand of Ragnaros'
     else
       if item.quality < 50
-        item.quality = item.quality + 1
+        increase_quality(item)
         if item.name == 'Backstage passes to a TAFKAL80ETC concert'
-          if item.sell_in < 11
-            item.quality = item.quality + 1 if item.quality < 50
-          end
-          if item.sell_in < 6
-            item.quality = item.quality + 1 if item.quality < 50
-          end
+          increase_quality(item) if item.sell_in < 11
+          increase_quality(item) if item.sell_in < 6 
         end
       end
     end
-    item.sell_in = item.sell_in - 1 if item.name != 'Sulfuras, Hand of Ragnaros'
+    decrease_sell_in(item) if item.name != 'Sulfuras, Hand of Ragnaros'
     if item.sell_in < 0
       if item.name != 'Aged Brie'
         if item.name != 'Backstage passes to a TAFKAL80ETC concert'
-          if item.quality > 0
-            item.quality = item.quality - 1 if item.name != 'Sulfuras, Hand of Ragnaros'
-          end
+          decrease_quality(item) if item.name != 'Sulfuras, Hand of Ragnaros'
         else
-          item.quality = item.quality - item.quality
+          decrease_quality(item, item.quality)
         end
       else
-        item.quality = item.quality + 1 if item.quality < 50
+        increase_quality(item)
       end
     end
   end
 
-  def increase_quality
 end
