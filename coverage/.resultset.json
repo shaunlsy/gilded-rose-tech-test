@@ -8,8 +8,6 @@
           1,
           1,
           1,
-          1,
-          1,
           33,
           null,
           null,
@@ -25,10 +23,6 @@
         "lines": [
           null,
           1,
-          1,
-          1,
-          1,
-          null,
           null,
           null,
           1,
@@ -80,14 +74,14 @@
           null,
           null,
           null,
+          1,
+          1,
+          132,
+          132,
+          132,
+          132,
+          132,
           null,
-          1,
-          1,
-          132,
-          132,
-          132,
-          132,
-          132,
           null,
           null,
           1,
@@ -131,26 +125,8 @@
           null,
           null
         ]
-      },
-      "/Users/student/Documents/Projects/gilded-rose-tech-test/lib/aged_brie.rb": {
-        "lines": [
-
-        ]
-      },
-      "/Users/student/Documents/Projects/gilded-rose-tech-test/lib/backstage.rb": {
-        "lines": [
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null
-        ]
       }
     },
-    "timestamp": 1582827533
+    "timestamp": 1582899136
   }
 }

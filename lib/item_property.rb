@@ -1,9 +1,5 @@
 # frozen_string_literal: true
 require 'delegate'
-require_relative 'item'
-require_relative 'aged_brie'
-require_relative 'backstage'
-
 
 # self Property Class responsible for the quality and sell in of the selfs
 class ItemProperty < SimpleDelegator
@@ -55,7 +51,6 @@ class ItemProperty < SimpleDelegator
   end
 
 end
-
 class BackStage < ItemProperty
   def calculate_quality
     measure = 1
@@ -65,6 +60,7 @@ class BackStage < ItemProperty
     measure
   end
 end
+
 class AgedBrie < ItemProperty
   def calculate_quality
     measure = 1
